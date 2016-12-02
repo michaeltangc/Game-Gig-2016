@@ -1,3 +1,6 @@
+require 'src/list'
+require 'src/pathfinding'
+
 platform = {}
 player = {}
 ghost = {}
@@ -46,36 +49,42 @@ function love.load()
     love.graphics.setColor(255,255,255);
 end
 
-function love.keypressed(key)
-    if key == 'up' then
-        if (player.y > 1) then
-            if level1[player.y - 1][player.x] ~= 0 then
-                player.y  = player.y - 1
-            end
-        end
-    elseif key == 'down' then
-        if (player.y < 13 and level1[player.y + 1][player.x] ~= 0) then
-            player.y = player.y + 1
-        end
-    elseif key == 'left' then
-        if (player.x > 1) then
-            if (level1[player.y][player.x - 1] ~= 0) then
-                player.x = player.x - 1
-            end
-        end
-    elseif key =='right' then
-            if (player.x < 13 and level1[player.y][player.x + 1] ~= 0) then
-            player.x = player.x + 1
-        end
-    end
-end
-
 movement = {{1,0},{0,1},{-1,0},{0,-1}}
 function update_ghost()
     direction = find_shortest_path_direction(ghost.x,ghost.y,player.x,4,{},10,10)
     ghost.x = movement[direction][1] + ghost.x
     ghost.y = movement[direction][2] + ghost.y
 end
+
+
+function love.keypressed(key)
+    if key == 'up' then
+        if (player.y > 1) then
+            if level1[player.y - 1][player.x] ~= 0 then
+                player.y  = player.y - 1
+                update_ghost()
+            end
+        end
+    elseif key == 'down' then
+        if (player.y < 13 and level1[player.y + 1][player.x] ~= 0) then
+            player.y = player.y + 1
+            update_ghost()
+        end
+    elseif key == 'left' then
+        if (player.x > 1) then
+            if (level1[player.y][player.x - 1] ~= 0) then
+                player.x = player.x - 1
+                update_ghost()
+            end
+        end
+    elseif key =='right' then
+            if (player.x < 13 and level1[player.y][player.x + 1] ~= 0) then
+            player.x = player.x + 1
+            update_ghost()
+        end
+    end
+end
+
 
 function love.draw()
     love.graphics.printf("Food left: " .. food .. 
