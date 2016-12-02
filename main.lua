@@ -51,9 +51,12 @@ end
 
 movement = {{1,0},{0,1},{-1,0},{0,-1}}
 function update_ghost()
-    direction = find_shortest_path_direction(ghost.x,ghost.y,player.x,4,{},10,10)
-    ghost.x = movement[direction][1] + ghost.x
-    ghost.y = movement[direction][2] + ghost.y
+    direction = find_shortest_path_direction(ghost.x, ghost.y, player.x,4, level1,13,13)
+    if direction ~= 0 then
+        ghost.x = movement[direction][1] + ghost.x
+        ghost.y = movement[direction][2] + ghost.y
+    end
+
 end
 
 

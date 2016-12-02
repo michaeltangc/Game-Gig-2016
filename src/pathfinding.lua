@@ -1,5 +1,8 @@
 
 function find_shortest_path_direction(sx, sy, tx, ty, map, width, height)
+    if (sx == tx and sy == ty) then
+        return 0
+    end
     local visited = {}
     for y = 1, height do
         visited[y] = {}
@@ -31,7 +34,7 @@ function find_shortest_path_direction(sx, sy, tx, ty, map, width, height)
         if current[1] == tx and current[2] == ty then
             return current[3]
         end
-        if current[1] >= 1 and current[1] <= width and current[2] >= 1 and current[2] <= height and visited[current[2]][current[1]] == 0 and map[temp[2]][temp[1]] > 0 then
+        if current[1] >= 1 and current[1] <= width and current[2] >= 1 and current[2] <= height and visited[current[2]][current[1]] == 0 and map[current[2]][current[1]] > 0 then
             visited[current[2]][current[1]] = 1
 
             for i = 1, 4 do
